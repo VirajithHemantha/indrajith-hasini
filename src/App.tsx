@@ -4,32 +4,32 @@ import { Sparkles, MapPin, Calendar, Clock, Send, ChevronDown } from "lucide-rea
 
 const INVITATION = {
   couple: {
-    bride: "ලක්ෂාණි",
-    groom: "රාහුල්",
-    brideFull: "ලක්ෂාණි",
-    groomFull: "රාහුල්",
+    bride: "හසිනි",
+    groom: "ඉන්ද්‍රජිත්",
+    brideFull: "හසිනි",
+    groomFull: "ඉන්ද්‍රජිත්",
   },
   date: {
-    displayNumeric: "30 . 07 . 2026",
-    displayLong: "බ්‍රහස්පතින්දා, 30 ජූලි 2026",
-    countdownTarget: "2026-07-30T10:00:00+05:30",
+    displayNumeric: "24 . 08 . 2026",
+    displayLong: "2026 අගෝස්තු 24 වන සඳුදා",
+    countdownTarget: "2026-08-24T10:00:00+05:30",
   },
   time: {
-    ceremonyStart: "පෙ.ව. 10:00",
-    ceremonyEnd: "ප.ව. 03:30",
-    registration: "පෙ.ව. 10:45",
-    welcome: "දහවල් 12:30",
+    ceremonyStart: "පෙ.ව. 10.00",
+    ceremonyEnd: "ප.ව. 5.05",
+    registration: "පෙ.ව. 11.06",
+    welcome: "ප.ව. 12.16",
   },
   venue: {
-    name: "Alora hotel & Family restaurant",
-    city: "Nugawela",
-    mapQuery: "Alora hotel & Family restaurant, Nugawela",
-    googleMapsLink: "https://www.google.com/maps/search/?api=1&query=Alora+hotel+Family+restaurant+Nugawela",
+    name: "Mudalige Dream Paradise",
+    city: "පිලාන",
+    mapQuery: "Mudalige Dream Paradise, Pilana",
+    googleMapsLink: "https://maps.app.goo.gl/LyG4Y3oAhzjAKQXy6?g_st=iwb",
   },
-  rsvpContacts: ["රාහුල්: 071-XXXXXXX", "ලක්ෂාණි: 071-XXXXXXX", "පවුල: 071-XXXXXXX"],
+  rsvpContacts: ["ඉන්ද්‍රජිත්: 071-XXXXXXX", "හසිනි: 071-XXXXXXX", "පවුල: 071-XXXXXXX"],
 } as const;
 
-const backgroundMusic = "/Brooklyn Duo - A Thousand Years [WEDDING VERSION].mp3";
+const backgroundMusic = "/thawthisa-lowen-ashen-senarathna (1).mp3";
 const googleScriptUrl =
   "https://script.google.com/macros/s/AKfycbw3f4cbJzxOlp5p5EMcg8m-TXZjcy7v2TkdqQUfoUA2CgV1Zl_YURgdMHQuVlTMBDu86w/exec";
 
@@ -449,7 +449,7 @@ export default function WeddingInvitation() {
               </div>
             </motion.button>
 
-            <section className="w-full relative flex items-start justify-center overflow-hidden bg-white min-h-[85vh] pt-20 md:pt-32">
+            <section className="w-full relative flex items-start justify-center overflow-hidden bg-white min-h-[100dvh] pt-20 md:pt-32 pb-32">
               <div
                 className="absolute inset-0 bg-center bg-cover"
                 style={{ backgroundImage: `url("${encodeURI(HERO_BACKGROUND_IMAGE)}")` }}
@@ -489,10 +489,30 @@ export default function WeddingInvitation() {
                 </motion.div>
 
                 <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 1 }}
+                  className="mt-12 mx-auto relative w-56 md:w-64 aspect-[4/5] rounded-t-[10rem] rounded-b-3xl p-2 bg-white/50 backdrop-blur-md border border-white/70 shadow-[0_20px_40px_-15px_rgba(3,105,161,0.2)]"
+                >
+                  <div className="w-full h-full rounded-t-[10rem] rounded-b-[1.25rem] overflow-hidden relative border border-white/60">
+                    <img
+                      src="/WhatsApp Image 2026-07-09 at 03.57.46.jpeg"
+                      alt="Couple"
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-1000"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0369a1]/20 via-transparent to-transparent" />
+                  </div>
+                  
+                  <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-white p-2.5 rounded-full shadow-xl border border-sky-100">
+                    <Sparkles className="w-5 h-5 text-[#0284c7]" />
+                  </div>
+                </motion.div>
+
+                <motion.div
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35, duration: 0.8 }}
-                  className="mt-12 space-y-5"
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                  className="mt-14 space-y-5"
                 >
                   <p className="text-sm sm:text-base md:text-xl tracking-[0.15em] sm:tracking-[0.25em] text-[#0369a1] font-bold drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">
                     {INVITATION.date.displayLong} · {INVITATION.time.ceremonyStart}
@@ -559,16 +579,16 @@ export default function WeddingInvitation() {
                         පවුල් දෙකක් ආදරයෙන් එක්වන මොහොතක්
                       </p>
 
-                      <div className="flex flex-col items-center justify-center gap-2">
+                      <div className="flex flex-col items-center justify-center gap-2 text-center">
                         <span className="text-sm md:text-base tracking-wider text-slate-700">
-                          වසන්ත විජේසිරි මැතිතුමාගේ සහ එම මැතිනියගේ ආදරණීය දියණිය
+                          හේමන්ත කරුණාආරච්චි මැතිතුමාගේ සහ තුෂාරිකා රියවසම් මැතිනියගේ ආදරණීය දියණිය
                         </span>
                         <span className="text-xl md:text-2xl font-bold text-[#0284c7] my-1">
                           {INVITATION.couple.brideFull}
                         </span>
                         <span className="text-2xl text-[#0284c7] italic my-2">සමඟ</span>
                         <span className="text-sm md:text-base tracking-wider text-slate-700">
-                          ගාමිණී රත්නසිරි මැතිතුමාගේ සහ එම මැතිනියගේ ආදරණීය පුතණුවන්
+                          කේ.පී. කුලරත්න මැතිතුමාගේ සහ කේ.කේ. ස්වර්ණා ද අල්විස් මැතිනියගේ ආදරණීය පුතණුවන්
                         </span>
                         <span className="text-xl md:text-2xl font-bold text-[#0284c7] my-1">
                           {INVITATION.couple.groomFull}
@@ -655,7 +675,7 @@ export default function WeddingInvitation() {
                             වේලාව
                           </div>
                           <div className="text-sm md:text-base text-[#0369a1] tracking-wide font-bold">
-                            පෝරු උත්සවය {INVITATION.time.ceremonyStart}ට
+                            උත්සවය ආරම්භය {INVITATION.time.ceremonyStart}ට
                           </div>
                         </div>
                       </div>
@@ -711,8 +731,12 @@ export default function WeddingInvitation() {
                 <div className="mx-auto max-w-2xl w-full text-left bg-white border border-[#7dd3fc]/40 shadow-[0_30px_70px_-20px_rgba(45,90,39,0.1)] rounded-[2rem]">
                   <div className="p-8 md:p-12 space-y-8">
                     {[
-                      ["පෝරු උත්සවය", INVITATION.time.ceremonyStart],
-                      ["උත්සවය අවසානය", INVITATION.time.ceremonyEnd],
+                      ["අත්සන් කිරීම", "පෙ.ව. 11.06"],
+                      ["පෝරුවට නැගීම", "පෙ.ව. 11.38"],
+                      ["මුදු පැළඳවීම හා අත්පැන් වත් කිරීම", "පෙ.ව. 11.44"],
+                      ["පෝරුවෙන් බැසීම", "ප.ව. 12.05"],
+                      ["දිවා භෝජනය", "ප.ව. 12.16"],
+                      ["යුවළ පිටවීම", "ප.ව. 5.05"],
                     ].map(([title, time]) => (
                       <div key={title} className="flex items-start gap-4">
                         <div className="w-10 h-10 rounded-full border border-[#0284c7]/20 flex items-center justify-center shrink-0">
@@ -889,7 +913,7 @@ export default function WeddingInvitation() {
                             </div>
                             <div className="space-y-1">
                               <h4 className="text-[#0369a1]/40 font-bold text-[10px] tracking-[0.5em]">
-                                පෝරු උත්සවය
+                                උත්සවය ආරම්භය
                               </h4>
                               <p className="text-xl md:text-2xl text-[#0369a1] leading-relaxed tracking-wide font-bold">
                                 {INVITATION.time.ceremonyStart}
