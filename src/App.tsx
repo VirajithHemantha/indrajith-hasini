@@ -289,7 +289,7 @@ export default function WeddingInvitation() {
   };
 
   useEffect(() => {
-    if (isOpened && !isPlaying && !hasAttemptedAutoplay && audioRef.current) {
+    if ((isOpened || hasStarted) && !isPlaying && !hasAttemptedAutoplay && audioRef.current) {
       setHasAttemptedAutoplay(true);
 
       audioRef.current
@@ -311,7 +311,7 @@ export default function WeddingInvitation() {
           window.addEventListener("click", playOnInteraction);
         });
     }
-  }, [isOpened, isPlaying, hasAttemptedAutoplay]);
+  }, [isOpened, hasStarted, isPlaying, hasAttemptedAutoplay]);
 
   return (
     <main
@@ -332,7 +332,7 @@ export default function WeddingInvitation() {
             <video
               ref={introVideoRef}
               src="/Bride_and_groom_walking_garden_202606021456.mp4"
-              muted={!hasStarted}
+              muted={true}
               playsInline
               preload="auto"
               className={`w-full h-full object-cover transition-all duration-[2000ms] ease-out ${!hasStarted ? "blur-xl scale-110 opacity-60" : "blur-0 scale-100 opacity-100"
@@ -367,9 +367,13 @@ export default function WeddingInvitation() {
                       setHasStarted(true);
 
                       if (introVideoRef.current) {
-                        introVideoRef.current.muted = false;
+                        introVideoRef.current.muted = true;
                         introVideoRef.current.currentTime = 0;
                         introVideoRef.current.play();
+                      }
+
+                      if (audioRef.current && !isPlaying) {
+                        audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
                       }
                     }}
                     className="group relative px-12 py-5 overflow-hidden rounded-full transition-all duration-500 hover:scale-105 active:scale-95"
@@ -502,7 +506,7 @@ export default function WeddingInvitation() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0369a1]/20 via-transparent to-transparent" />
                   </div>
-                  
+
                   <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-white p-2.5 rounded-full shadow-xl border border-sky-100">
                     <Sparkles className="w-5 h-5 text-[#0284c7]" />
                   </div>
@@ -581,7 +585,7 @@ export default function WeddingInvitation() {
 
                       <div className="flex flex-col items-center justify-center gap-2 text-center">
                         <span className="text-sm md:text-base tracking-wider text-slate-700">
-                          හේමන්ත කරුණාආරච්චි මැතිතුමාගේ සහ තුෂාරිකා රියවසම් මැතිනියගේ ආදරණීය දියණිය
+                          හේමන්ත කරුණාආරච්චි මැතිතුමාගේ සහ තුෂාරි කාරියවසම් මැතිනියගේ ආදරණීය දියණිය
                         </span>
                         <span className="text-xl md:text-2xl font-bold text-[#0284c7] my-1">
                           {INVITATION.couple.brideFull}
@@ -622,11 +626,15 @@ export default function WeddingInvitation() {
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="relative z-20 w-full max-w-[560px] bg-white p-8 md:p-14 shadow-[0_30px_70px_-15px_rgba(45,90,39,0.1)] border border-[#7dd3fc]/30 flex flex-col items-center justify-center text-center"
+                    className="relative z-20 w-full max-w-[560px] bg-white p-8 md:p-14 shadow-[0_30px_70px_-15px_rgba(45,90,39,0.1)] border border-[#7dd3fc]/30 flex flex-col items-center justify-center text-center overflow-hidden"
                   >
+                    <div 
+                      className="absolute inset-0 opacity-15 pointer-events-none bg-center bg-cover"
+                      style={{ backgroundImage: `url("${encodeURI('/WhatsApp Image 2026-07-09 at 03.57.46.jpeg')}")` }}
+                    />
                     <div className="absolute inset-2 border-[0.5px] border-[#0284c7]/30 pointer-events-none" />
 
-                    <div className="space-y-5 mb-10">
+                    <div className="space-y-5 mb-10 relative z-10">
                       <div className="flex flex-col items-center gap-2">
                         <h3 className="text-5xl md:text-7xl text-[#0284c7] leading-none">
                           {INVITATION.couple.bride}
@@ -634,7 +642,7 @@ export default function WeddingInvitation() {
                       </div>
                     </div>
 
-                    <div className="py-2 flex items-center justify-center w-full relative">
+                    <div className="py-2 flex items-center justify-center w-full relative z-10">
                       <div className="absolute inset-0 flex items-center" aria-hidden="true">
                         <div className="w-full border-t border-[#7dd3fc]/50" />
                       </div>
@@ -643,7 +651,7 @@ export default function WeddingInvitation() {
                       </div>
                     </div>
 
-                    <div className="space-y-5 mt-10">
+                    <div className="space-y-5 mt-10 relative z-10">
                       <div className="flex flex-col items-center gap-2">
                         <h3 className="text-5xl md:text-7xl text-[#0284c7] leading-none">
                           {INVITATION.couple.groom}
@@ -651,7 +659,7 @@ export default function WeddingInvitation() {
                       </div>
                     </div>
 
-                    <div className="mt-12 grid grid-cols-1 gap-6 w-full text-left">
+                    <div className="mt-12 grid grid-cols-1 gap-6 w-full text-left relative z-10">
                       <div className="flex items-start gap-4">
                         <div className="w-10 h-10 rounded-full border border-[#0284c7]/20 flex items-center justify-center shrink-0">
                           <Calendar className="w-4 h-4 text-[#0284c7]" />
@@ -713,7 +721,7 @@ export default function WeddingInvitation() {
                   className="space-y-6 mb-12"
                 >
                   <div className="flex flex-col items-center gap-3">
-                    <span className="text-[#0369a1] font-bold tracking-[0.6em] text-[10px] md:text-xs opacity-50">
+                    <span className="text-[#0369a1] font-bold tracking-[0.6em] text-xs md:text-sm opacity-50">
                       දවසේ වැඩසටහන
                     </span>
                     <div className="h-px w-16 bg-[#0369a1]/30" />
@@ -728,8 +736,12 @@ export default function WeddingInvitation() {
                   </p>
                 </motion.div>
 
-                <div className="mx-auto max-w-2xl w-full text-left bg-white border border-[#7dd3fc]/40 shadow-[0_30px_70px_-20px_rgba(45,90,39,0.1)] rounded-[2rem]">
-                  <div className="p-8 md:p-12 space-y-8">
+                <div className="mx-auto max-w-2xl w-full text-left bg-white border border-[#7dd3fc]/40 shadow-[0_30px_70px_-20px_rgba(45,90,39,0.1)] rounded-[2rem] overflow-hidden relative">
+                  <div 
+                    className="absolute inset-0 opacity-15 pointer-events-none bg-center bg-cover"
+                    style={{ backgroundImage: `url("${encodeURI('/WhatsApp Image 2026-07-11 at 00.40.44.jpeg')}")` }}
+                  />
+                  <div className="p-8 md:p-12 space-y-8 relative z-10">
                     {[
                       ["අත්සන් කිරීම", "පෙ.ව. 11.06"],
                       ["පෝරුවට නැගීම", "පෙ.ව. 11.38"],
@@ -848,7 +860,7 @@ export default function WeddingInvitation() {
                   className="space-y-10 mb-24"
                 >
                   <div className="flex flex-col items-center gap-4">
-                    <span className="text-[#0369a1] font-bold tracking-[0.8em] text-[10px] md:text-xs opacity-40">
+                    <span className="text-[#0369a1] font-bold tracking-[0.8em] text-xs md:text-sm opacity-40">
                       උත්සව ස්ථානය
                     </span>
                     <div className="flex items-center gap-2">
@@ -898,7 +910,7 @@ export default function WeddingInvitation() {
                               <MapPin className="w-5 h-5 text-[#0284c7]" />
                             </div>
                             <div className="space-y-3">
-                              <h4 className="text-[#0369a1]/40 font-bold text-[10px] tracking-[0.5em]">
+                              <h4 className="text-[#0369a1]/40 font-bold text-xs md:text-sm tracking-[0.5em]">
                                 ගමනාන්තය
                               </h4>
                               <p className="text-xl md:text-2xl text-[#0369a1] leading-relaxed tracking-wide font-bold">
@@ -912,7 +924,7 @@ export default function WeddingInvitation() {
                               <Clock className="w-5 h-5 text-[#0284c7]" />
                             </div>
                             <div className="space-y-1">
-                              <h4 className="text-[#0369a1]/40 font-bold text-[10px] tracking-[0.5em]">
+                              <h4 className="text-[#0369a1]/40 font-bold text-xs md:text-sm tracking-[0.5em]">
                                 උත්සවය ආරම්භය
                               </h4>
                               <p className="text-xl md:text-2xl text-[#0369a1] leading-relaxed tracking-wide font-bold">
@@ -1107,7 +1119,7 @@ export default function WeddingInvitation() {
                   className="space-y-6 mb-20"
                 >
                   <div className="flex flex-col items-center gap-3">
-                    <span className="text-[#0369a1] font-bold tracking-[0.6em] text-[10px] md:text-xs opacity-50">
+                    <span className="text-[#0369a1] font-bold tracking-[0.6em] text-xs md:text-sm opacity-50">
                       අමුත්තන්ගේ සටහන් පොත
                     </span>
                     <div className="h-px w-16 bg-[#0284c7]/30" />
