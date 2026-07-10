@@ -665,7 +665,7 @@ export default function WeddingInvitation() {
                           <Calendar className="w-4 h-4 text-[#0284c7]" />
                         </div>
                         <div>
-                          <div className="text-[9px] tracking-[0.5em] font-bold text-[#0369a1]/40">
+                          <div className="text-xs md:text-sm tracking-[0.5em] font-bold text-[#0369a1]/40">
                             දිනය
                           </div>
                           <div className="text-sm md:text-base text-[#0369a1] tracking-wide font-bold">
@@ -679,7 +679,7 @@ export default function WeddingInvitation() {
                           <Clock className="w-4 h-4 text-[#0369a1]" />
                         </div>
                         <div>
-                          <div className="text-[9px] tracking-[0.5em] font-bold text-[#0369a1]/40">
+                          <div className="text-xs md:text-sm tracking-[0.5em] font-bold text-[#0369a1]/40">
                             වේලාව
                           </div>
                           <div className="text-sm md:text-base text-[#0369a1] tracking-wide font-bold">
@@ -693,7 +693,7 @@ export default function WeddingInvitation() {
                           <MapPin className="w-4 h-4 text-[#0369a1]" />
                         </div>
                         <div>
-                          <div className="text-[9px] tracking-[0.5em] font-bold text-[#0369a1]/40">
+                          <div className="text-xs md:text-sm tracking-[0.5em] font-bold text-[#0369a1]/40">
                             ස්ථානය
                           </div>
                           <div className="text-sm md:text-base text-[#0369a1] tracking-wide font-bold">
@@ -892,9 +892,13 @@ export default function WeddingInvitation() {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.2, duration: 0.8 }}
-                      className="bg-white p-10 md:p-16 shadow-[0_60px_100px_-40px_rgba(45,90,39,0.1)] border border-[#7dd3fc]/30 relative group"
+                      className="bg-white p-10 md:p-16 shadow-[0_60px_100px_-40px_rgba(45,90,39,0.1)] border border-[#7dd3fc]/30 relative group overflow-hidden"
                     >
-                      <div className="absolute inset-2 border-[0.5px] border-[#0284c7]/20 pointer-events-none group-hover:border-[#0284c7]/40 transition-colors duration-700" />
+                      <div 
+                        className="absolute inset-0 opacity-15 pointer-events-none bg-center bg-cover"
+                        style={{ backgroundImage: `url("${encodeURI('/WhatsApp Image 2026-07-09 at 03.57.46.jpeg')}")` }}
+                      />
+                      <div className="absolute inset-2 border-[0.5px] border-[#0284c7]/20 pointer-events-none group-hover:border-[#0284c7]/40 transition-colors duration-700 z-10" />
 
                       <div className="space-y-12 relative z-10">
                         <div className="space-y-6">
