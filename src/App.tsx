@@ -16,9 +16,9 @@ const INVITATION = {
   },
   time: {
     ceremonyStart: "පෙ.ව. 10.00",
-    ceremonyEnd: "ප.ව. 5.05",
-    registration: "පෙ.ව. 11.06",
-    welcome: "ප.ව. 12.16",
+    ceremonyEnd: "ප.ව. 4.58",
+    registration: "පෙ.ව. 10.58",
+    welcome: "ප.ව. 12.05",
   },
   venue: {
     name: "Mudalige Dream Paradise",
@@ -31,7 +31,7 @@ const INVITATION = {
 
 const backgroundMusic = "/thawthisa-lowen-ashen-senarathna (1).mp3";
 const googleScriptUrl =
-  "https://script.google.com/macros/s/AKfycbw3f4cbJzxOlp5p5EMcg8m-TXZjcy7v2TkdqQUfoUA2CgV1Zl_YURgdMHQuVlTMBDu86w/exec";
+  "https://script.google.com/macros/s/AKfycbw9tjQIh_v_Wgvivrsa9BXeAjs11WGay2vzwQxUwyN0Y7O4ks2Liw0UYDjkIy2zts1N1A/exec";
 
 const HERO_BACKGROUND_IMAGE = "/ChatGPT Image May 22, 2026, 12_24_57 AM.png";
 const DETAILS_BACKGROUND_IMAGE = "/ChatGPT Image May 22, 2026, 12_26_02 AM.png";
@@ -196,6 +196,10 @@ export default function WeddingInvitation() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasAttemptedAutoplay, setHasAttemptedAutoplay] = useState(false);
 
+  const searchParams = new URLSearchParams(window.location.search);
+  const guestPrefix = searchParams.get("p");
+  const guestName = searchParams.get("n");
+
   const [rsvpForm, setRsvpForm] = useState({
     name: "",
     guests: "1",
@@ -217,12 +221,17 @@ export default function WeddingInvitation() {
       throw new Error("Google Script URL tl ilid ke;");
     }
 
-    const response = await fetch(googleScriptUrl, {
-      method: "POST",
-      body: new URLSearchParams(payload),
-    });
-
-    if (!response.ok) {
+    try {
+      await fetch(googleScriptUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(payload).toString(),
+      });
+      // with no-cors, response is opaque and response.ok is false, so we just assume success if no exception is thrown
+    } catch (error) {
       throw new Error("b,a,Su id¾:l fkdùh");
     }
   };
@@ -463,6 +472,7 @@ export default function WeddingInvitation() {
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/40 to-white" aria-hidden="true" />
 
               <div className="relative z-10 w-full max-w-5xl px-6 text-center">
+
                 <motion.p
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -565,6 +575,36 @@ export default function WeddingInvitation() {
               <div className="absolute inset-5 md:inset-10 border-[0.5px] border-[#38bdf8]/10 pointer-events-none z-10" />
 
               <div className="max-w-[1100px] w-full flex flex-col items-center text-center relative z-20 px-6">
+                {guestPrefix && guestName && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1, duration: 0.8 }}
+                    className="mb-16 p-8 md:p-10 border border-[#0369a1]/30 rounded-3xl bg-white/50 backdrop-blur-xl relative overflow-hidden shadow-[0_20px_40px_-15px_rgba(3,105,161,0.15)] mx-auto max-w-2xl w-full"
+                  >
+                    <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-[#0369a1]/40 rounded-tl-xl m-4" />
+                    <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-[#0369a1]/40 rounded-br-xl m-4" />
+                    <p className="dl-manel-bold text-[#0369a1] text-lg md:text-2xl leading-loose font-bold">
+                      ආදරණීය
+                      <br />
+                      <span className="text-2xl md:text-4xl font-bold my-4 block drop-shadow-sm">
+                        {guestName} {guestPrefix}
+                      </span>
+                      {guestPrefix === "පවුලේ සැම" && (
+                        <>
+                          ඔබ සහ ඔබේ පවුලේ සැමට
+                          <br />
+                          <br />
+                        </>
+                      )}
+                      අපගේ විවාහ මංගල උත්සවයට
+                      <br />
+                      සුහදයෙන් ආරාධනා කරමු ❤️
+                    </p>
+                  </motion.div>
+                )}
+
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -604,7 +644,11 @@ export default function WeddingInvitation() {
                       අතිනත ගැනීමේ ප්‍රීතිය නිමිත්තෙන් පැවැත්වෙන ප්‍රිය සම්භාෂණයට සහභාගී වන මෙන්
                       <br />
                       <span className="text-[#0284c7] font-bold text-base md:text-lg my-2 block">
-                        ඔබට / ඔබ දෙපළට / ඔබ සැමට කෙරෙන ගෞරවණීය ඇරයූමයි!
+                        {guestPrefix === "මහත්මා සහ මහත්මිය" 
+                          ? "ඔබ දෙපළට කෙරෙන ගෞරවණීය ඇරයූමයි!" 
+                          : guestPrefix === "පවුලේ සැම" 
+                            ? "ඔබ සැමට කෙරෙන ගෞරවණීය ඇරයූමයි!" 
+                            : "ඔබට කෙරෙන ගෞරවණීය ඇරයූමයි!"}
                       </span>
                     </p>
                   </div>
@@ -743,12 +787,12 @@ export default function WeddingInvitation() {
                   />
                   <div className="p-8 md:p-12 space-y-8 relative z-10">
                     {[
-                      ["අත්සන් කිරීම", "පෙ.ව. 11.06"],
-                      ["පෝරුවට නැගීම", "පෙ.ව. 11.38"],
-                      ["මුදු පැළඳවීම හා අත්පැන් වත් කිරීම", "පෙ.ව. 11.44"],
-                      ["පෝරුවෙන් බැසීම", "ප.ව. 12.05"],
-                      ["දිවා භෝජනය", "ප.ව. 12.16"],
-                      ["යුවළ පිටවීම", "ප.ව. 5.05"],
+                      ["අත්සන් කිරීම", "පෙ.ව. 10.58"],
+                      ["පෝරුවට නැගීම", "පෙ.ව. 11.28"],
+                      ["මුදු පැළඳවීම හා අත්පැන් වත් කිරීම", "පෙ.ව. 11.33"],
+                      ["පෝරුවෙන් බැසීම", "පෙ.ව. 11.59"],
+                      ["දිවා භෝජනය", "ප.ව. 12.05"],
+                      ["යුවළ පිටවීම", "ප.ව. 4.58"],
                     ].map(([title, time]) => (
                       <div key={title} className="flex items-start gap-4">
                         <div className="w-10 h-10 rounded-full border border-[#0284c7]/20 flex items-center justify-center shrink-0">
@@ -1256,9 +1300,7 @@ export default function WeddingInvitation() {
                     අපගේ විශේෂ දිනය ඔබ සමඟ ආදරයෙන් සැමරීමට අපි බලා සිටිමු.
                   </p>
 
-                  <p className="text-[10px] md:text-xs tracking-[0.5em] text-[#0369a1]/50 font-bold">
-                    © 2026 {INVITATION.couple.bride} සහ {INVITATION.couple.groom}
-                  </p>
+
                 </motion.div>
               </div>
             </section>
